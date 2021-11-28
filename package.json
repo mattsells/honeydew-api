@@ -1,0 +1,19 @@
+{
+  "name": "honeydew-api",
+  "version": "0.0.1",
+  "description": "API server for Honeydew app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattsells/honeydew-api.git"
+  },
+  "author": "Matthew Sells",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/mattsells/honeydew-api/issues"
+  },
+  "homepage": "https://github.com/mattsells/honeydew-api#readme"
+}
