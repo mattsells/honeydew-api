@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email             String  @unique @db.VarChar(255)
+  encryptedPassword String  @db.VarChar(255)
+  name              String? @db.VarChar(100)
+
+  spaces   UsersOnSpaces[]
+  routines Routine[]
+  task     Task[]
+}
+
+model Space {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String? @db.VarChar(100)
+
+  users    UsersOnSpaces[]
+  rooms    Room[]
+  chores   Chore[]
+  routines Routine[]
+  tasks    Task[]
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model UsersOnSpaces {
+  user    User     @relation(fields: [userId], references: [id])
+  userId  Int
+  space   Space    @relation(fields: [spaceId], references: [id])
+  spaceId Int
+  role    UserRole
+
+  @@id([userId, spaceId])
+}
+
+model Room {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  space    Space     @relation(fields: [spaceId], references: [id])
+  spaceId  Int
+  routines Routine[]
+  tasks    Task[]
+}
+
+model Chore {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  space    Space     @relation(fields: [spaceId], references: [id])
+  spaceId  Int
+  routines Routine[]
+}
+
+model Routine {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  space   Space  @relation(fields: [spaceId], references: [id])
+  spaceId Int
+  chore   Chore  @relation(fields: [choreId], references: [id])
+  choreId Int
+  user    User   @relation(fields: [userId], references: [id])
+  userId  Int
+  tasks   Task[]
+  rooms   Room[]
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  space     Space    @relation(fields: [spaceId], references: [id])
+  spaceId   Int
+  routine   Routine? @relation(fields: [routineId], references: [id])
+  routineId Int?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  rooms     Room[]
+}
