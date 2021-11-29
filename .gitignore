@@ -1,5 +1,11 @@
+# Production build dirs
 /build
 
+# Vendor modules
 node_modules
 
+# Config settings
 .env
+
+# Local IDE config
+.vscode
