@@ -13,8 +13,8 @@ router.get('/health', (req, res) => {
   res.json({ success: true });
 });
 
-router.get('/error', (req, res, next) => {
-  next(new ServerError('You can\'t do that', 403));
+router.get('/error', () => {
+  throw new ServerError('You can\'t do that', 403);
 });
 
 export default router;
