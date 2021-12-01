@@ -1,8 +1,10 @@
-import '@/lib/auth';
-
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
+
+import applyAuthStrategies from '@/lib/auth';
+
+applyAuthStrategies(passport);
 
 const JWT_SECRET = process.env.JWT_SECRET || '';
 
