@@ -18,7 +18,7 @@ app.use(morgan('short'));
 
 // Route declarations
 app.use(router.auth);
-app.use('/v1', router.v1);
+app.use('/v1', passport.authenticate('jwt', { session: false }), router.v1);
 
 // Error handling
 app.use(errorDistributor);

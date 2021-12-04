@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import passport from 'passport';
 
 import ServerError from '@/lib/error/ServerError';
 
@@ -10,12 +9,12 @@ router.get('/health', (req, res) => {
   res.json({ success: true });
 });
 
-router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/protected', (req, res) => {
   res.json({ success: true });
 });
 
 router.get('/error', () => {
-  throw new ServerError('You can\'t do that', 403);
+  throw new ServerError('You can\'t do that', 500);
 });
 
 export default router;
