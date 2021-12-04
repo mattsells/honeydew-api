@@ -1,20 +1,11 @@
 import { Router } from 'express';
-import passport from 'passport';
 
-import ServerError from '@/lib/error/ServerError';
+import healthChecks from './health';
+import spaces from './spaces';
 
 const router = Router();
 
-router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({ success: true });
-});
-
-router.get('/health', (req, res) => {
-  res.json({ success: true });
-});
-
-router.get('/error', () => {
-  throw new ServerError('You can\'t do that', 403);
-});
+router.use(spaces);
+router.use(healthChecks);
 
 export default router;

@@ -1,10 +1,11 @@
 import 'module-alias/register';
 
 import express from 'express';
+import morgan from 'morgan';
 import passport from 'passport';
 
 import errorDistributor from '@/lib/error/distributor';
-import router from '@/routes';
+import * as router from '@/routes';
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,6 +14,7 @@ const app = express();
 // Initial middleware
 app.use(express.json());
 app.use(passport.initialize());
+app.use(morgan('short'));
 
 // Route declarations
 app.use(router.auth);
