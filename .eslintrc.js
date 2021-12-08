@@ -16,6 +16,7 @@ module.exports = {
     'import',
   ],
   rules: {
+    'consistent-return': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',

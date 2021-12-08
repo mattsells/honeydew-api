@@ -2,6 +2,6 @@ import ServerError from './ServerError';
 
 export default class UnauthorizedError extends ServerError {
   constructor() {
-    super('User in unauthorized', 403);
+    super('You are not authorized to perform this action', 403);
   }
 }

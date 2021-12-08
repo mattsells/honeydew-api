@@ -1,13 +1,10 @@
+import { Express } from 'express';
+
 import ServerError from '../error/ServerError';
 
-export type PolicyUser = {
-  id: number;
-  email: string;
-}
+type ActionDefinition = (user?: Express.User, record?: any) => boolean | Promise<boolean>;
 
-type ActionDefinition = (user?: PolicyUser, record?: any) => boolean;
-
-type PolicyDefinition = {
+export type PolicyDefinition = {
   [k: string]: ActionDefinition
 }
 
@@ -18,13 +15,13 @@ class Policy {
     this.definitions = definitions;
   }
 
-  authorize(action: string, user?: PolicyUser, record?: any): boolean {
+  async authorize(action: string, user?: Express.User, record?: any): Promise<boolean> {
     if (!this.definitions[action]) {
       return false;
     }
 
     try {
-      return this.definitions[action](user, record);
+      return await this.definitions[action](user, record);
     } catch (err) {
       throw new ServerError('Error in authorization determination', 500);
     }
